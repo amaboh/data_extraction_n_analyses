@@ -12,18 +12,18 @@ url = "https://www.youtube.com/watch?v=VyGpknh4rPM&ab_channel=Dr.VanitaRattan"
 # Download audio
 yt = YouTube(url)
 stream = yt.streams.filter(only_audio=True).first()
-audiofile = f"{yt.title}.mp3"
+audiofile = f"{yt.title}.mp4"
 stream.download(filename=audiofile)
 
 # Convert audio to WAV
 def convert_to_wav(input_file):
-    audio = AudioSegment.from_file(input_file, format='mp3')
+    audio = AudioSegment.from_file(input_file, format='mp4')
     output_file = os.path.splitext(input_file)[0] + '.wav'
     audio.export(output_file, format='wav')
     print(f'File converted to {output_file}')
 
 convert_to_wav(audiofile)
-add
+
 # Transcribe audio to text and store in CSV
 cwd = os.getcwd()
 converter = Youtube2Text()
