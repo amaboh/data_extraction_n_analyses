@@ -5,6 +5,7 @@ from pydub import AudioSegment
 import wget
 import speech_recognition as sr 
 from pydub.silence import split_on_silence
+import csv
 
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -90,10 +91,17 @@ def get_large_audio_transcription(path):
                 text = f"{text.capitalize()}. "
                 print(chunk_filename, ":", text)
                 whole_text += text
-    # return the text for all chunks detected
+                
+    # save output to CSV 
+    output_file = os.path.splitext(os.path.basename(path))[0] + ".csv"
+    with open(output_file, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Transcription"])
+        writer.writerow([whole_text])
+        
     return whole_text
-# save the output to a csv file
-output_file = os.path.splitext(input_file)[0] + '.csv'
+
+    
 
 get_large_audio_transcription(audiofile_wav)
 
